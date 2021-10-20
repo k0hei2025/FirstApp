@@ -4,18 +4,28 @@
     <button v-on:click="toggleHandler()">
       show Details
     </button>
+    <button v-on:click="toggleEvent">
+      toggleStatus
+    </button>
+
     <ul v-if="show === true" class="contentBox">
       <li>{{ name }}</li>
       <li>{{ phoneNumber }}</li>
       <li>{{ email }}</li>
     </ul>
+
+    <button @click="$emit('delete', id)">
+      Delete
+    </button>
   </li>
 </template>
 
 <script>
 export default {
   //   props: ["name", "phoneNumber", "email"],
+
   props: {
+    id: String,
     name: String,
     phoneNumber: String,
     email: String,
@@ -24,18 +34,18 @@ export default {
   data() {
     return {
       show: false,
-      friend: {
-        id: "john",
-        name: "Manuel Schewizer",
-        phone: "0731-33432-323",
-        email: "manuel.schewizer@gmail.com",
-      },
     };
   },
 
   methods: {
     toggleHandler() {
       this.show = !this.show;
+    },
+    toggleEvent() {
+      this.$emit("toggle-event");
+    },
+    deleteHandler() {
+      this.$emit("delete", this.id);
     },
   },
 };

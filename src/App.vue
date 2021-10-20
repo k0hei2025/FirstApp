@@ -10,12 +10,18 @@
         email="i.email"
       ></friend-list>
     </ul> -->
+
+    <add-friend-form v-on:add-contact="addContact"> </add-friend-form>
+
     <friend-list
-      v-for="(i, index) in people"
-      v-bind:key="index"
+      v-for="i in people"
+      v-bind:key="i.id"
       v-bind:name="i.name"
       v-bind:phone-number="i.phone"
+      v-bind:id="i.id"
       v-bind:email="i.email"
+      v-on:toggle-Event="toggleEventStatus()"
+      v-on:delete="deleteHandler"
     ></friend-list>
 
     <!-- <friend-list
@@ -30,6 +36,9 @@
 export default {
   data() {
     return {
+      name: "",
+      email: "",
+      phone: "",
       people: [
         {
           id: "john",
@@ -45,6 +54,27 @@ export default {
         },
       ],
     };
+  },
+  methods: {
+    toggleEventStatus() {
+      console.log("clclclcllc");
+      alert("Toggle event status presed");
+    },
+    addContact(name, email, phone) {
+      console.log(name, email, phone);
+      const AddFriend = {
+        id: new Date().toISOString(),
+        name: name,
+        email: email,
+        phone: phone,
+      };
+      this.people.push(AddFriend);
+    },
+    deleteHandler(id) {
+      console.log(id);
+      this.people = this.people.filter((i) => i.id !== id);
+      console.log(this.people);
+    },
   },
 };
 </script>
